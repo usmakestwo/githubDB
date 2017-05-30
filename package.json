@@ -1,0 +1,48 @@
+{
+  "name": "jsonDB",
+  "version": "0.0.1",
+  "main": "./jsonDB.js",
+  "description": "A Lightweight Cloud based JSON Database with a MongoDB like API for Node.",
+  "bugs": "https://github.com/usmakestwo/jsonDB/issues",
+  "author": {
+    "name": "Gonzalo Vazquez",
+    "email": "gonzalovazquez@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/usmakestwo/jsonDB"
+  },
+  "license": "MIT",
+  "files": [
+    "lib"
+  ],
+  "keywords": [
+    "diskDB",
+    "JSON",
+    "Database",
+    "file system",
+    "CRUD",
+    "lightweight"
+  ],
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-polyfill": "^6.16.0",
+    "babel-preset-latest": "^6.16.0",
+    "grunt": "^1.0.0",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-nodeunit": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "jshint-stylish": "^0.2.0",
+    "load-grunt-tasks": "^0.4.0",
+    "time-grunt": "^0.3.1"
+  },
+  "dependencies": {
+    "chalk": "^0.4.0",
+    "merge": "^1.1.3",
+    "uuid": "^3.0.0"
+  },
+  "scripts": {
+    "compile": "node_modules/.bin/babel lib --out-dir dist",
+    "test": "npm run-script compile && grunt"
+  }
+}
