@@ -30,7 +30,7 @@ Clients that are supported:
 - Google Drive (coming soon)
 - Gitlab (coming soon)
 
-Install the module locally :  
+Install the module locally :
 ```bash
 $ npm install jsonDB
 ```
@@ -39,7 +39,7 @@ $ npm install jsonDB
 var db = require('jsonDB');
 db = db.auth('cloud-provider', {'clientId': 'xxx', 'clientSecret': 'xxx'});
 // you can authenticate with the cloud provider here.
-db = db.connect('/path/to/db-folder', ['collection-name']);
+db.connect('/path/to/db-folder', ['collection-name']);
 // you can access the traditional JSON DB methods here
 ```
 
