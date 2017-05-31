@@ -2,7 +2,7 @@
 
 A Lightweight Cloud based JSON Database with a MongoDB like API for Node.
 
-_You will never know that you are interacting with a File System_
+_You will never know that you are interacting with a Cloud Provider_
 
 ## Contents
 
@@ -37,6 +37,8 @@ $ npm install jsonDB
 
 ```js
 var db = require('jsonDB');
+db = db.auth('cloud-provider', {'clientId': 'xxx', 'clientSecret': 'xxx'});
+// you can authenticate with the cloud provider here.
 db = db.connect('/path/to/db-folder', ['collection-name']);
 // you can access the traditional JSON DB methods here
 ```
@@ -44,14 +46,15 @@ db = db.connect('/path/to/db-folder', ['collection-name']);
 ## Documentation
 ### Connect to DB
 ```js
+db.auth(cloudProvider, {'clientId': 'xxx', 'clientSecret': 'xxx'});
 db.connect(pathToFolder, ['filename']);
 ```
+Cloud provider is one of the supported clients. jsonDB will take care of the authentication.
 Filename will be the name of the JSON file. You can omit the extension, jsonDB will take care of it for you.
 
 ```js
 var db = require('jsonDB');
-db = db.connect('/examples/db', ['articles']);
-// or simply
+db = db.auth('github', {'clientId': 123, 'clientSecret': '234'});
 db.connect('/examples/db', ['articles']);
 ```
 
