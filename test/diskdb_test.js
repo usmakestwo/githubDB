@@ -99,6 +99,20 @@ var dbPath = 'test/testdb',
         }]
     };
 
+var clienId = 'bb21e9d1d286a93ee3d9';
+var clientSecret = '207682bdc82ac8200415c5f1af051ac34602dd28';
+
+exports.authenticate = {
+    'auth: ': function(test) {
+        test.equal(diskdb.auth(), false);
+        test.done();
+    },
+    'auth with credentials': function(test) {
+        test.equal(diskdb.auth(clienId, clientSecret), true);
+        test.done();
+    }
+};
+
 exports.connectNload = {
     setUp: function(done) {
         deleteFolderRecursive(dbPath);

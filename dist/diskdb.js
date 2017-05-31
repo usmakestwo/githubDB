@@ -16,12 +16,19 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+// import github client
+
+
 //local modules
 
 
 var _path = require('path');
 
 var _chalk = require('chalk');
+
+var _github = require('github');
+
+var _github2 = _interopRequireDefault(_github);
 
 var _util = require('./util');
 
@@ -39,6 +46,33 @@ var DiskDB = function () {
   }
 
   _createClass(DiskDB, [{
+    key: 'auth',
+    value: function auth(clientID, clientSecret) {
+      if (!clientID && !clientSecret) {
+        console.log((0, _chalk.red)('Missing credentials!'));
+        return false;
+      }
+      // Initialize connectivity with Github
+      var github = new _github2.default({
+        // optional
+        debug: true,
+        protocol: 'https',
+        host: 'api.github.com', // should be api.github.com for GitHub
+        headers: {
+          'user-agent': 'Json DB' // GitHub is happy with a unique user agent
+        },
+        Promise: require('bluebird'),
+        timeout: 5000
+      });
+
+      github.authenticate({
+        type: 'oauth',
+        key: clientID,
+        secret: clientSecret
+      });
+      console.log((0, _chalk.green)('User has been authenticated successfully!'));
+    }
+  }, {
     key: 'connect',
     value: function connect(path, collections) {
       if ((0, _util.isValidPath)(path)) {
