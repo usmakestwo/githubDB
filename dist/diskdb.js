@@ -49,7 +49,7 @@ var DiskDB = function () {
     key: 'auth',
     value: function auth(clientID, clientSecret) {
       if (!clientID && !clientSecret) {
-        console.log((0, _chalk.red)('Missing credentials!'));
+        console.log((0, _chalk.red)('\nMissing credentials!'));
         return false;
       }
       // Initialize connectivity with Github
@@ -67,10 +67,11 @@ var DiskDB = function () {
 
       github.authenticate({
         type: 'oauth',
-        key: clientID,
+        key: 123,
         secret: clientSecret
       });
       console.log((0, _chalk.green)('User has been authenticated successfully!'));
+      return true;
     }
   }, {
     key: 'connect',
