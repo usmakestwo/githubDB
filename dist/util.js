@@ -25,17 +25,25 @@ var _merge = require('merge');
 
 var _merge2 = _interopRequireDefault(_merge);
 
+var _githubdb = require('./githubdb');
+
+var _githubdb2 = _interopRequireDefault(_githubdb);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var ENCODING = 'utf-8';
+var githubdb = new _githubdb2.default();
 
 var isValidPath = exports.isValidPath = _fs.existsSync;
 
 var writeToFile = exports.writeToFile = function writeToFile(outputFilename) {
   var content = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-  return (0, _fs.writeFileSync)(outputFilename, JSON.stringify(content));
+  var github = arguments[2];
+
+  (0, _fs.writeFile)(outputFilename, JSON.stringify(content));
+  githubdb.updateBlob(github.user, github.repo, github.remoteFilename, JSON.stringify(content));
 };
 
 var readFromFile = exports.readFromFile = function readFromFile(file) {

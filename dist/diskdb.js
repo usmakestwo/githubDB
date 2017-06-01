@@ -1,11 +1,3 @@
-/*
- * diskDB
- * http://arvindr21.github.io/diskDB
- *
- * Copyright (c) 2014 Arvind Ravulavaru
- * Licensed under the MIT license.
- */
-
 'use strict';
 
 // global modules
@@ -29,9 +21,15 @@ var _collection = require('./collection');
 
 var _collection2 = _interopRequireDefault(_collection);
 
+var _githubdb = require('./githubdb');
+
+var _githubdb2 = _interopRequireDefault(_githubdb);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var githubdb = new _githubdb2.default();
 
 var DiskDB = function () {
   function DiskDB() {
@@ -40,22 +38,23 @@ var DiskDB = function () {
 
   _createClass(DiskDB, [{
     key: 'connect',
-    value: function connect(path, collections) {
+    value: function connect(path, collections, github) {
       if ((0, _util.isValidPath)(path)) {
         this._db = { path: path };
         console.log((0, _chalk.green)('Successfully connected to : ' + path));
         if (collections) {
-          this.loadCollections(collections);
+          this.loadCollections(collections, github);
         }
       } else {
         console.log((0, _chalk.red)('The DB Path [' + path + '] does not seem to be valid. Recheck the path and try again'));
         return false;
       }
+      githubdb.auth(github.personalAccessToken);
       return this;
     }
   }, {
     key: 'loadCollections',
-    value: function loadCollections(collections) {
+    value: function loadCollections(collections, github) {
       var _this = this;
 
       if (!this._db) {
@@ -72,7 +71,7 @@ var DiskDB = function () {
             (0, _util.writeToFile)(collectionFile);
           }
           var collectionName = collection.replace('.json', '');
-          _this[collectionName] = new _collection2.default(_this, collectionName);
+          _this[collectionName] = new _collection2.default(_this, collectionName, {}, github);
         });
       } else {
         console.log((0, _chalk.red)('Invalid Collections Array.', 'Expected Format : ', '[\'collection1\',\'collection2\',\'collection3\']'));
