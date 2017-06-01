@@ -35,12 +35,13 @@ var UUID = function UUID() {
 var Collection = function () {
   function Collection(db, collectionName) {
     var opts = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+    var github = arguments[3];
 
     _classCallCheck(this, Collection);
 
     this.db = db;
     this.opts = opts;
-
+    this.github = github;
     // throw an exception if the collection's JSON file is invalid?
     this.opts.throwParseError = opts.throwParseError === undefined ? false : opts.throwParseError;
 
@@ -97,15 +98,13 @@ var Collection = function () {
           collection.push(d);
           retCollection.push(d);
         }
-        util.writeToFile(this._f, collection).then(function () {
-          return retCollection;
-        });
+        util.writeToFile(this._f, collection, this.github);
+        return retCollection;
       } else {
         data._id = UUID().replace(/-/g, '');
         collection.push(data);
-        util.writeToFile(this._f, collection).then(function () {
-          return data;
-        });
+        util.writeToFile(this._f, collection, this.github);
+        return data;
       }
     }
   }, {
@@ -135,9 +134,8 @@ var Collection = function () {
           ret.inserted = 0;
         }
       }
-      util.writeToFile(this._f, collection).then(function () {
-        return ret;
-      });
+      util.writeToFile(this._f, collection, this.github);
+      return ret;
     }
   }, {
     key: 'remove',
@@ -148,7 +146,7 @@ var Collection = function () {
           multi = true;
         }
         collection = util.removeFiltered(collection, query, multi);
-        util.writeToFile(this._f, collection);
+        util.writeToFile(this._f, collection, this.github);
       } else {
         util.removeFile(this._f);
         delete this.db[this.collectionName];

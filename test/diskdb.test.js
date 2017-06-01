@@ -2,11 +2,8 @@
 import chai from 'chai';
 import spies from 'chai-spies';
 import assert from 'assert';
-import chaiAsPromised from 'chai-as-promised';
 
 import DiskDB from '../lib/diskdb';
-
-chai.use(chaiAsPromised);
 
 const diskdb = new DiskDB();
 const expect = chai.expect;
@@ -14,7 +11,7 @@ const should = chai.should();
 
 
 const github = {
-  personalAccessToken: '9187059e4431a66447b3e123acd60637e741fae7',
+  personalAccessToken: process.env.TOKEN,
   user: 'cibc-api',
   repo: 'marketplace-admin',
   remoteFilename: 'users.json'

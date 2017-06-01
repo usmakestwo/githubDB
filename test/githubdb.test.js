@@ -4,15 +4,15 @@ import spies from 'chai-spies';
 import assert from 'assert';
 import chaiAsPromised from 'chai-as-promised';
 
-import Githubdb from '../lib/githubdb';
+import GithubDB from '../lib/githubdb';
 
 chai.use(chaiAsPromised);
 
-const githubDB = new Githubdb();
+const githubDB = new GithubDB();
 const expect = chai.expect;
 const should = chai.should();
 
-const personalAccessToken = '9187059e4431a66447b3e123acd60637e741fae7';
+const personalAccessToken = process.env.TOKEN;
 
 const userObject = {
   "email_address": "gonzalo" + Math.random().toString() + "@cibc.com",
@@ -38,8 +38,12 @@ describe('githubDB module', () => {
   });
 
   it('should create a blob in Github', (done) => {
-    expect(githubDB.auth(personalAccessToken));
-    expect(githubDB.updateBlob('cibc-api', 'marketplace-admin', 'users.json', JSON.stringify(userObject))).eventually.to.be.an('object').notify(done);
+    /**
+     * Wrap in timeout block to avoid collision with other test
+     */
+    setTimeout(() => {
+      expect(githubDB.updateBlob('cibc-api', 'marketplace-admin', 'users.json', JSON.stringify(userObject))).eventually.to.be.an('object').notify(done);
+    }, 1000);
   });
 
 });
