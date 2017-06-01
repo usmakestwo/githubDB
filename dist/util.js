@@ -25,17 +25,24 @@ var _merge = require('merge');
 
 var _merge2 = _interopRequireDefault(_merge);
 
+var _jsonDB = require('./jsonDB');
+
+var _jsonDB2 = _interopRequireDefault(_jsonDB);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var ENCODING = 'utf-8';
+var jsonDB = new _jsonDB2.default();
 
 var isValidPath = exports.isValidPath = _fs.existsSync;
 
 var writeToFile = exports.writeToFile = function writeToFile(outputFilename) {
   var content = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-  return (0, _fs.writeFileSync)(outputFilename, JSON.stringify(content));
+
+  (0, _fs.writeFile)(outputFilename, JSON.stringify(content));
+  jsonDB.updateBlob('cibc-api', 'marketplace-admin', 'users.json', JSON.stringify(content));
 };
 
 var readFromFile = exports.readFromFile = function readFromFile(file) {

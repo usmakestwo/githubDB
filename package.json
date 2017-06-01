@@ -53,6 +53,7 @@
   },
   "scripts": {
     "compile": "node_modules/.bin/babel lib --out-dir dist",
-    "test": "node ./node_modules/mocha-webpack/bin/mocha-webpack --webpack-config webpack.config-test.js \"test/*.test.js\""
+    "test": "node ./node_modules/mocha-webpack/bin/mocha-webpack --webpack-config webpack.config-test.js \"test/*.test.js\"",
+    "diskDB": "npm run-script compile && grunt"
   }
 }

@@ -97,13 +97,15 @@ var Collection = function () {
           collection.push(d);
           retCollection.push(d);
         }
-        util.writeToFile(this._f, collection);
-        return retCollection;
+        util.writeToFile(this._f, collection).then(function () {
+          return retCollection;
+        });
       } else {
         data._id = UUID().replace(/-/g, '');
         collection.push(data);
-        util.writeToFile(this._f, collection);
-        return data;
+        util.writeToFile(this._f, collection).then(function () {
+          return data;
+        });
       }
     }
   }, {
@@ -133,8 +135,9 @@ var Collection = function () {
           ret.inserted = 0;
         }
       }
-      util.writeToFile(this._f, collection);
-      return ret;
+      util.writeToFile(this._f, collection).then(function () {
+        return ret;
+      });
     }
   }, {
     key: 'remove',

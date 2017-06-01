@@ -1,11 +1,3 @@
-/*
- * diskDB
- * http://arvindr21.github.io/diskDB
- *
- * Copyright (c) 2014 Arvind Ravulavaru
- * Licensed under the MIT license.
- */
-
 'use strict';
 
 // global modules
@@ -16,9 +8,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-// import github client
-
-
 //local modules
 
 
@@ -26,19 +15,22 @@ var _path = require('path');
 
 var _chalk = require('chalk');
 
-var _github = require('github');
-
-var _github2 = _interopRequireDefault(_github);
-
 var _util = require('./util');
 
 var _collection = require('./collection');
 
 var _collection2 = _interopRequireDefault(_collection);
 
+var _jsonDB = require('./jsonDB');
+
+var _jsonDB2 = _interopRequireDefault(_jsonDB);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var jsonDB = new _jsonDB2.default();
+var personalAccessToken = '9187059e4431a66447b3e123acd60637e741fae7';
 
 var DiskDB = function () {
   function DiskDB() {
@@ -46,34 +38,6 @@ var DiskDB = function () {
   }
 
   _createClass(DiskDB, [{
-    key: 'auth',
-    value: function auth(clientID, clientSecret) {
-      if (!clientID && !clientSecret) {
-        console.log((0, _chalk.red)('\nMissing credentials!'));
-        return false;
-      }
-      // Initialize connectivity with Github
-      var github = new _github2.default({
-        // optional
-        debug: true,
-        protocol: 'https',
-        host: 'api.github.com', // should be api.github.com for GitHub
-        headers: {
-          'user-agent': 'Json DB' // GitHub is happy with a unique user agent
-        },
-        Promise: require('bluebird'),
-        timeout: 5000
-      });
-
-      github.authenticate({
-        type: 'oauth',
-        key: 123,
-        secret: clientSecret
-      });
-      console.log((0, _chalk.green)('User has been authenticated successfully!'));
-      return true;
-    }
-  }, {
     key: 'connect',
     value: function connect(path, collections) {
       if ((0, _util.isValidPath)(path)) {
@@ -86,6 +50,7 @@ var DiskDB = function () {
         console.log((0, _chalk.red)('The DB Path [' + path + '] does not seem to be valid. Recheck the path and try again'));
         return false;
       }
+      jsonDB.auth(personalAccessToken);
       return this;
     }
   }, {

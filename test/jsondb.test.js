@@ -37,7 +37,7 @@ describe('jsonDB module', () => {
     expect(jsonDB.connectToRepo('cibc-api', 'marketplace-admin')).eventually.to.be.an('object').notify(done);
   });
 
-  it.only('should create a blob in Github', (done) => {
+  it('should create a blob in Github', (done) => {
     expect(jsonDB.auth(personalAccessToken));
     expect(jsonDB.updateBlob('cibc-api', 'marketplace-admin', 'users.json', JSON.stringify(userObject))).eventually.to.be.an('object').notify(done);
   });
