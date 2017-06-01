@@ -1,6 +1,6 @@
 {
   "name": "github-db",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "./diskdb.js",
   "description": "A Lightweight Cloud based JSON Database with a MongoDB like API for Node.",
   "bugs": "https://github.com/usmakestwo/githubDB/issues",
@@ -14,15 +14,17 @@
   },
   "license": "MIT",
   "files": [
-    "lib"
+    "lib",
+    "dist"
   ],
   "keywords": [
-    "diskDB",
+    "githubDB",
     "JSON",
     "Database",
     "file system",
     "CRUD",
-    "lightweight"
+    "lightweight",
+    "github"
   ],
   "devDependencies": {
     "assert": "^1.4.1",
