@@ -12,6 +12,14 @@ const diskdb = new DiskDB();
 const expect = chai.expect;
 const should = chai.should();
 
+
+const github = {
+  personalAccessToken: '9187059e4431a66447b3e123acd60637e741fae7',
+  user: 'cibc-api',
+  repo: 'marketplace-admin',
+  remoteFilename: 'users.json'
+};
+
 var dbPath = 'test/testdb',
     collection = ['articles'],
     collections = ['comments', 'rating'],
@@ -88,10 +96,10 @@ var dbPath = 'test/testdb',
 describe('diskDB module', () => {
 
   before(() => {
-    diskdb.connect(dbPath, collection);
+    diskdb.connect(dbPath, collection, github);
   });
 
-  it.only('should save multiple to Github', (done) => {
+  it('should save multiple to Github', (done) => {
     expect(diskdb.articles.save([article, article2])).to.be.an('array');
     done();
   });

@@ -4,11 +4,11 @@ import spies from 'chai-spies';
 import assert from 'assert';
 import chaiAsPromised from 'chai-as-promised';
 
-import JsonDB from '../lib/jsonDB';
+import Githubdb from '../lib/githubdb';
 
 chai.use(chaiAsPromised);
 
-const jsonDB = new JsonDB();
+const githubDB = new Githubdb();
 const expect = chai.expect;
 const should = chai.should();
 
@@ -21,25 +21,25 @@ const userObject = {
   "github_username": "gonzalovazquez"+ Math.random().toString()
 };
 
-describe('jsonDB module', () => {
+describe('githubDB module', () => {
 
   it('should failed authentication if not credentials are provided', (done) => {
-    expect(jsonDB.auth()).to.be.false;
+    expect(githubDB.auth()).to.be.false;
     done();
   });
 
   it('should return authenticated client', (done) => {
-    expect(jsonDB.auth(personalAccessToken)).to.be.true;
+    expect(githubDB.auth(personalAccessToken)).to.be.true;
     done();
   });
 
   it('should return the reference of the connected path', (done) => {
-    expect(jsonDB.connectToRepo('cibc-api', 'marketplace-admin')).eventually.to.be.an('object').notify(done);
+    expect(githubDB.connectToRepo('cibc-api', 'marketplace-admin')).eventually.to.be.an('object').notify(done);
   });
 
   it('should create a blob in Github', (done) => {
-    expect(jsonDB.auth(personalAccessToken));
-    expect(jsonDB.updateBlob('cibc-api', 'marketplace-admin', 'users.json', JSON.stringify(userObject))).eventually.to.be.an('object').notify(done);
+    expect(githubDB.auth(personalAccessToken));
+    expect(githubDB.updateBlob('cibc-api', 'marketplace-admin', 'users.json', JSON.stringify(userObject))).eventually.to.be.an('object').notify(done);
   });
 
 });
