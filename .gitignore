@@ -1,4 +1,12 @@
 /node_modules/
 npm-debug.log
-test/testdb/
+test/
 .tmp
+dist
+examples
+**.js
+.babelrc
+.editorconfig
+.jshintrc
+.travis.yml
+diskdb.js
