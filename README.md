@@ -1,4 +1,4 @@
-# jsonDB
+# githubDB
 
 A Lightweight Cloud based JSON Database with a MongoDB like API for Node.
 
@@ -22,47 +22,46 @@ _You will never know that you are interacting with a Cloud Provider_
 
 ## Getting Started
 
-With jsonDB you can use multiple clients as a Database.
-
-Clients that are supported:
-- Github
-- Dropbox (coming soon)
-- Google Drive (coming soon)
-- Gitlab (coming soon)
+With githubDB you use Github as your private database.
 
 Install the module locally :
 ```bash
-$ npm install jsonDB
+$ npm install github-db
 ```
 
 ```js
-var db = require('jsonDB');
-db = db.auth('cloud-provider', {'clientId': 'xxx', 'clientSecret': 'xxx'});
+var db = require('github-db');
+
 // you can authenticate with the cloud provider here.
-db.connect('/path/to/db-folder', ['collection-name']);
+const credentials = {
+  personalAccessToken: 'personal-access-token',
+  user: 'github-username',
+  repo: 'github-repo',
+  remoteFilename: 'filename-with-extension'
+};
+
+db.connect('/path/to/db-folder', ['collection-name'], credentials);
 // you can access the traditional JSON DB methods here
 ```
 
 ## Documentation
 ### Connect to DB
 ```js
-db.auth(cloudProvider, {'clientId': 'xxx', 'clientSecret': 'xxx'});
-db.connect(pathToFolder, ['filename']);
+db.connect('/path/to/db-folder', ['collection-name'], credentials);
 ```
-Cloud provider is one of the supported clients. jsonDB will take care of the authentication.
-Filename will be the name of the JSON file. You can omit the extension, jsonDB will take care of it for you.
+Cloud provider is one of the supported clients. githubDB will take care of the authentication.
+Filename will be the name of the JSON file. You can omit the extension, githubDB will take care of it for you.
 
 ```js
-var db = require('jsonDB');
-db = db.auth('github', {'clientId': 123, 'clientSecret': '234'});
-db.connect('/examples/db', ['articles']);
+var db = require('github-db');
+db.connect('/path/to/db-folder', ['collection-name'], credentials);
 ```
 
-This will check for a directory at given path, if it does not exits, jsonDB will throw an error and exit.
+This will check for a directory at given path, if it does not exits, githubDB will throw an error and exit.
 
-If the directory exists but the file/collection does not exist, jsonDB will create it for you.
+If the directory exists but the file/collection does not exist, githubDB will create it for you.
 
-**Note** : If you have manually created a JSON file, please make sure it contains a valid JSON array, otherwise jsonDB
+**Note** : If you have manually created a JSON file, please make sure it contains a valid JSON array, otherwise githubDB
 will return an empty array.
 
 ```js
@@ -81,24 +80,25 @@ SyntaxError: Unexpected end of input
 Alternatively you can also load collections like
 
 ```js
-var db = require('jsonDB');
+var db = require('github-db');
 // this
-db = db.connect('/examples/db');
+
+db = db.connect('/examples/db', ['articles'], credentials);
 db.loadCollections(['articles']);
 //or
-db.connect('/examples/db');
+db.connect('/examples/db', ['articles'], credentials);
 db.loadCollections(['articles']);
 //or
-db.connect('/examples/db')
+db.connect('/examples/db', ['articles'], credentials)
   .loadCollections(['articles']);
 //or
-db.connect('/examples/db', ['articles']);
+db.connect('/examples/db', ['articles'], credentials);
 ```
 #### Load Multiple Collections
 
 ```js
-var db = require('jsonDB');
-db.connect('/examples/db', ['articles','comments','users']);
+var db = require('github-db');
+db.connect('/examples/db', ['articles','comments','users'], credentials);
 ```
 ---
 ### Write/Save to Collection
@@ -112,10 +112,10 @@ db.[collectionName].[methodname]
 ```
 To save the data, you can use
 ```js
-var db = require('jsonDB');
-db.connect('db', ['articles']);
+var db = require('github-db');
+db.connect('db', ['articles'], credentials);
 var article = {
-    title : "jsonDB rocks",
+    title : "githubDB rocks",
     published : "today",
     rating : "5 stars"
 }
@@ -127,7 +127,7 @@ The saved data will be
 ```js
 [
     {
-        "title": "jsonDB rocks",
+        "title": "githubDB rocks",
         "published": "today",
         "rating": "5 stars",
         "_id": "0f6047c6c69149f0be0c8f5943be91be"
@@ -137,22 +137,22 @@ The saved data will be
 You can also save multiple objects at once like
 
 ```js
-var db = require('jsonDB');
-db.connect('db', ['articles']);
+var db = require('github-db');
+db.connect('db', ['articles'], credentials);
 var article1 = {
-    title : 'jsonDB rocks',
+    title : 'githubDB rocks',
     published : 'today',
     rating : '5 stars'
 }
 
 var article2 = {
-    title : 'jsonDB rocks',
+    title : 'githubDB rocks',
     published : 'yesterday',
     rating : '5 stars'
 }
 
 var article3 = {
-    title : 'jsonDB rocks',
+    title : 'githubDB rocks',
     published : 'today',
     rating : '4 stars'
 }
@@ -161,15 +161,15 @@ db.articles.save([article1, article2, article3]);
 And this will return the inserted objects
 
 ```js
-[ { title: 'jsonDB rocks',
+[ { title: 'githubDB rocks',
     published: 'today',
     rating: '4 stars',
     _id: 'b1cdbb3525b84e8c822fc78896d0ca7b' },
-  { title: 'jsonDB rocks',
+  { title: 'githubDB rocks',
     published: 'yesterday',
     rating: '5 stars',
     _id: '42997c62e1714e9f9d88bf3b87901f3b' },
-  { title: 'jsonDB rocks',
+  { title: 'githubDB rocks',
     published: 'today',
     rating: '5 stars',
     _id: '4ca1c1597ddc4020bc41b4418e7a568e' } ]
@@ -183,14 +183,14 @@ There are 2 methods available for reading the JSON collection
 
 #### db.collectionName.find()
 ```js
-var db = require('jsonDB');
-db.connect('/examples/db', ['articles']);
+var db = require('github-db');
+db.connect('/examples/db', ['articles'], credentials);
 db.articles.find();
 ```
 This will return all the records
 ```js
 [{
-    title: 'jsonDB rocks',
+    title: 'githubDB rocks',
     published: 'today',
     rating: '5 stars',
     _id: '0f6047c6c69149f0be0c8f5943be91be'
@@ -198,16 +198,16 @@ This will return all the records
 ```
 You can also query with a criteria like
 ```js
-var db = require('jsonDB');
-db.connect('/examples/db', ['articles']);
+var db = require('github-db');
+db.connect('/examples/db', ['articles'], credentials);
 db.articles.find({rating : "5 stars"});
 ```
 This will return all the articles which have a rating of 5.
 
 Find can take multiple criteria
 ```js
-var db = require('jsonDB');
-db.connect('/examples/db', ['articles']);
+var db = require('github-db');
+db.connect('/examples/db', ['articles'], credentials);
 db.articles.find({rating : "5 stars", published: "yesterday"});
 ```
 This will return all the articles with a rating of 5, published yesterday.
@@ -216,7 +216,7 @@ Nested JSON :
 
 ```js
 var articleComments = {
-    title: 'jsonDB rocks',
+    title: 'githubDB rocks',
     published: '2 days ago',
     comments: [{
         name: 'a user',
@@ -237,20 +237,20 @@ var articleComments = {
 var savedArticle = db.articles.save([articleComments);
 foundArticles = db.articles.find({rating : 2});
 ```
-Since jsonDB is mostly for light weight data storage, avoid nested structures and huge datasets.
+Since githubDB is mostly for light weight data storage, avoid nested structures and huge datasets.
 
 #### db.collectionName.findOne(query)
 ```js
-var db = require('jsonDB');
-db.connect('/examples/db', ['articles']);
+var db = require('github-db');
+db.connect('/examples/db', ['articles'], credentials);
 db.articles.findOne();
 ```
 
-If you do not pass a query, jsonDB will return the first article in the collection. If you pass a query, it will return first article in the filtered data.
+If you do not pass a query, githubDB will return the first article in the collection. If you pass a query, it will return first article in the filtered data.
 
 ```js
-var db = require('jsonDB');
-db.connect('/examples/db', ['articles']);
+var db = require('github-db');
+db.connect('/examples/db', ['articles'], credentials);
 db.articles.findOne({_id: '0f6047c6c69149f0be0c8f5943be91be'});
 ```
 ---
@@ -268,15 +268,15 @@ options = {
 ```
 Usage
 ```js
-var db = require('jsonDB');
-db.connect('/examples/db', ['articles']);
+var db = require('github-db');
+db.connect('/examples/db', ['articles'], credentials);
 
 var query = {
-  title : 'jsonDB rocks'
+  title : 'githubDB rocks'
 };
 
 var dataToBeUpdate = {
-  title : 'jsonDB rocks again!',
+  title : 'githubDB rocks again!',
 };
 
 var options = {
@@ -295,25 +295,25 @@ db.collectionName.remove(query, multi);
 You can remove the entire collection (including the file) or you can remove the matched objects by passing in a query. When you pass a query, you can either delete all the matched objects or only the first one by passing `multi` as `false`. The default value of `multi` is `true`.
 
 ```js
-var db = require('jsonDB');
-db.connect('/examples/db', ['articles']);
+var db = require('github-db');
+db.connect('/examples/db', ['articles'], credentials);
 db.articles.remove({rating : "5 stars"});
 ```
 ```js
-var db = require('jsonDB');
-db.connect('/examples/db', ['articles']);
+var db = require('github-db');
+db.connect('/examples/db', ['articles'], credentials);
 db.articles.remove({rating : "5 stars"}, true); // remove all matched. Default - multi = true
 ```
 
 ```js
-var db = require('jsonDB');
-db.connect('/examples/db', ['articles']);
+var db = require('github-db');
+db.connect('/examples/db', ['articles'], credentials);
 db.articles.remove({rating : "5 stars"}, false); // remove only the first match
 ```
 Using remove without any params will delete the file and will remove the db instance.
 ```js
-var db = require('jsonDB');
-db.connect('/examples/db', ['articles']);
+var db = require('github-db');
+db.connect('/examples/db', ['articles'], credentials);
 db.articles.remove();
 ```
 After the above operation `db.articles` is `undefined`.
@@ -325,49 +325,21 @@ db.collectionName.count();
 ```
 Will return the count of objects in the Collection
 ```js
-var db = require('jsonDB');
-db.connect('/examples/db', ['articles']);
+var db = require('github-db');
+db.connect('/examples/db', ['articles'], credentials);
 db.articles.count(); // will give the count
 ```
 
 ## Examples
-Refer to the [examples](https://github.com/usmakestwo/jsonDB/tree/master/examples) folder.
-
-## Performance
-To validate jsonDB's performance and to check if it meets your needs, you can clone this repo and run
-
-```bash
-$ node performance/time.js
-```
-An average of few tests (run on OS X - 10.9.3 | 2.9GHZ i7 | 8GB 1600MHz DDR3) can be found below
-
-#### Time taken to process x number of objects (in ms) vs Action Performed
-
-\# of objects          | 1          | 1000       | 10000      | 100000     | 1000000
------------------------|------------|------------|------------|------------|-------------
-Save                   | 1 ms       | 15 ms      | 137 ms     | 1728 ms    | 14425 ms   
-Find all without query | 0 ms       | 2 ms       | 12 ms      | 204 ms     | 2923 ms    
-Find all with query    | 0 ms       | 2 ms       | 17 ms      | 738 ms     | 1985 ms    
-Find one without query | 0 ms       | 1 ms       | 9 ms       | 791 ms     | 1676 ms    
-Find one with query    | 0 ms       | 1 ms       | 8 ms       | 219 ms     | 1410 ms    
-Update all records     | 1 ms       | 7 ms       | 61 ms      | 206 ms     | 48035 ms   
-Get count              | 0 ms       | 3 ms       | 11 ms      | 260 ms     | 2420 ms    
-Remove with query      | 0 ms       | 7 ms       | 59 ms      | 984 ms     | 48191 ms   
-Remove collection      | 0 ms       | 1 ms       | 4 ms       | 52 ms      | 154 ms     
-File size              | 0.000111 MB| 0.116671 MB| 1.196671 MB| 12.26667 MB| 125.66667 MB
+Refer to the [examples](https://github.com/usmakestwo/githubDB/tree/master/examples) folder.
 
 
 ## Contributing
-See the [CONTRIBUTING Guidelines](https://github.com/usmakestwo/jsonDB/blob/master/CONTRIBUTING.md)
+See the [CONTRIBUTING Guidelines](https://github.com/usmakestwo/githubDB/blob/master/CONTRIBUTING.md)
 
 ## Release History
 * 0.1.x
-  * Base Module with
-    * Connect to a Folder
-    * Access a Collection/File
-    * Create Read Update Delete on JSON object
-    * Minor fixes and tests
-    * Performance improvements
+  - Connect to Github
 
 ## License
 Copyright (c) 2017 UsMakesTwo. Licensed under the MIT license.
