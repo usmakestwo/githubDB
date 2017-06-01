@@ -1,16 +1,16 @@
 {
-  "name": "jsonDB",
+  "name": "github-db",
   "version": "0.0.1",
-  "main": "./jsonDB.js",
+  "main": "./diskdb.js",
   "description": "A Lightweight Cloud based JSON Database with a MongoDB like API for Node.",
-  "bugs": "https://github.com/usmakestwo/jsonDB/issues",
+  "bugs": "https://github.com/usmakestwo/githubDB/issues",
   "author": {
     "name": "Gonzalo Vazquez",
     "email": "gonzalovazquez@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/usmakestwo/jsonDB"
+    "url": "https://github.com/usmakestwo/githubDB"
   },
   "license": "MIT",
   "files": [
