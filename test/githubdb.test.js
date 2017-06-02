@@ -4,11 +4,18 @@ import spies from 'chai-spies';
 import assert from 'assert';
 import chaiAsPromised from 'chai-as-promised';
 
+import users from './db/users.json';
 import GithubDB from '../lib/githubdb';
 
 chai.use(chaiAsPromised);
 
-const githubDB = new GithubDB();
+const options = {
+  owner: 'cibc-api',
+  repo: 'marketplace-admin',
+  path: 'users.json'
+};
+
+const githubDB = new GithubDB(options);
 const expect = chai.expect;
 const should = chai.should();
 
@@ -34,16 +41,15 @@ describe('githubDB module', () => {
   });
 
   it('should return the reference of the connected path', (done) => {
-    expect(githubDB.connectToRepo('cibc-api', 'marketplace-admin')).eventually.to.be.an('object').notify(done);
+    expect(githubDB.connectToRepo()).eventually.to.be.an('object').notify(done);
   });
 
-  it('should create a blob in Github', (done) => {
-    /**
-     * Wrap in timeout block to avoid collision with other test
-     */
-    setTimeout(() => {
-      expect(githubDB.updateBlob('cibc-api', 'marketplace-admin', 'users.json', JSON.stringify(userObject))).eventually.to.be.an('object').notify(done);
-    }, 1000);
+  it('should save information passed', (done) => {
+    expect(githubDB.save(JSON.stringify(users))).eventually.to.be.an('object').notify(done);
+  });
+
+  it('should find all data if no query passed', (done) => {
+    expect(githubDB.find()).eventually.to.contain('rocks').notify(done);
   });
 
 });
