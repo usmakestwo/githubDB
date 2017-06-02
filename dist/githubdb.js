@@ -231,13 +231,13 @@ var Githubdb = function () {
             d._id = UUID().replace(/-/g, '');
             collection.push(d);
           }
-          _this3._update(collection, res.sha).then(function (res) {
+          return _this3._update(collection, res.sha).then(function (res) {
             return res;
           });
         } else {
           data._id = UUID().replace(/-/g, '');
           collection.push(data);
-          _this3._update(collection, res.sha).then(function (res) {
+          return _this3._update(collection, res.sha).then(function (res) {
             return res;
           });
         }
@@ -309,7 +309,7 @@ var Githubdb = function () {
               multi = true;
             }
             collection = util.removeFiltered(collection, query, multi);
-            _this6._update(collection, res.sha).then(function (res) {
+            return _this6._update(collection, res.sha).then(function (res) {
               resolve(res);
             });
           } else {
@@ -385,7 +385,7 @@ var Githubdb = function () {
               ret.inserted = 0;
             }
           }
-          _this8._update(collection, res.sha).then(function (res) {
+          return _this8._update(collection, res.sha).then(function (res) {
             resolve(res);
           });
         });

@@ -12,7 +12,7 @@ chai.use(chaiAsPromised);
 const options = {
   owner: 'cibc-api',
   repo: 'marketplace-admin',
-  path: 'users.json'
+  path: 'test.json'
 };
 
 const newUser = {
