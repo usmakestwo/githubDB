@@ -41,6 +41,7 @@
     "webpack-node-externals": "^1.6.0"
   },
   "dependencies": {
+    "bluebird": "^3.5.0",
     "chalk": "^0.4.0",
     "github": "^9.2.0",
     "merge": "^1.1.3",

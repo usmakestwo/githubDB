@@ -45,12 +45,10 @@ describe('githubDB module', () => {
   });
 
   it('should save information passed', (done) => {
-    githubDB.auth(personalAccessToken);
     expect(githubDB.save(users)).eventually.to.be.an('object').notify(done);
   });
 
-  it.only('should save one record and append to collection', (done) => {
-    githubDB.auth(personalAccessToken);
+  it('should save one record and append to collection', (done) => {
     expect(githubDB.save(newUser)).eventually.to.be.an('object').notify(done);
   });
 
@@ -66,8 +64,9 @@ describe('githubDB module', () => {
     expect(githubDB.findOne({name: 'Eric Broda'})).eventually.to.be.an('object').notify(done);
   })
 
-  it('should update record based on query', (done) => {
-    expect(githubDB.update({ github_username: 'gonzalovazquez' }, { verified: true })).eventually.to.be.an('object').notify(done);;
+  it.only('should update record based on query', (done) => {
+    githubDB.auth(personalAccessToken);
+    expect(githubDB.update({ github_username: 'gonzalovazquez' }, { verified: true })).eventually.to.be.an('object').notify(done);
   });
 
   it('should only delete record from query', (done) => {
