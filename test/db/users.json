@@ -3,22 +3,19 @@
     "email_address":"ericbroda@cibc.com",
     "name":"Eric Broda",
     "verified":false,
-    "github_username":"ericbroda",
-    "_id":"07670c5e3bd047c0b82d8289d1e33c76"
+    "github_username":"ericbroda"
   },
   {
     "email_address":"steve.hu@cibc.com",
     "name":"Steve Hu",
     "verified":false,
-    "github_username":"stevehu",
-    "_id":"127d253226554988892e1e87c2c5371e"
+    "github_username":"stevehu"
   },
   {
     "email_address":"dandobrin@cibc.com",
     "name":"Dan Dobrin",
     "verified":false,
-    "github_username":"Dan Dobrin",
-    "_id":"9239fcad5ec84459a14124db105be7d4"
+    "github_username":"Dan Dobrin"
   },
   {
     "email_address":"gonzalovazquez@cibc.com",

@@ -15,6 +15,13 @@ const options = {
   path: 'users.json'
 };
 
+const newUser = {
+  "email_address": "newUser",
+  "name": "New User",
+  "verified": false,
+  "github_username": "newUser",
+};
+
 const githubDB = new GithubDB(options);
 const expect = chai.expect;
 const should = chai.should();
@@ -38,7 +45,13 @@ describe('githubDB module', () => {
   });
 
   it('should save information passed', (done) => {
-    expect(githubDB.save(JSON.stringify(users))).eventually.to.be.an('object').notify(done);
+    githubDB.auth(personalAccessToken);
+    expect(githubDB.save(users)).eventually.to.be.an('object').notify(done);
+  });
+
+  it.only('should save one record and append to collection', (done) => {
+    githubDB.auth(personalAccessToken);
+    expect(githubDB.save(newUser)).eventually.to.be.an('object').notify(done);
   });
 
   it('should find all data if no query passed', (done) => {
