@@ -309,7 +309,7 @@ var Githubdb = function () {
               multi = true;
             }
             collection = util.removeFiltered(collection, query, multi);
-            _this6.save(JSON.stringify(collection)).then(function (res) {
+            _this6._update(collection, res.sha).then(function (res) {
               resolve(res);
             });
           } else {
@@ -385,9 +385,8 @@ var Githubdb = function () {
               ret.inserted = 0;
             }
           }
-          _this8.save(JSON.stringify(collection)).then(function (res) {
-            console.log(ret);
-            resolve(ret);
+          _this8._update(collection, res.sha).then(function (res) {
+            resolve(res);
           });
         });
       });
