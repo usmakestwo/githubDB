@@ -93,11 +93,11 @@ project:
 
    ```bash
    # Clone your fork of the repo into the current directory
-   git clone https://github.com/<your-username>/diskDB
+   git clone https://github.com/<your-username>/githubDB
    # Navigate to the newly cloned directory
-   cd diskDB
+   cd githubDB
    # Assign the original repo to a remote called "upstream"
-   git remote add upstream https://github.com/arvindr21/diskDB
+   git remote add upstream https://github.com/usmakestwo/githubDB
    ```
 
 2. If you cloned a while ago, get the latest changes from upstream:
