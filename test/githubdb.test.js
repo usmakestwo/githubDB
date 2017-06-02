@@ -49,8 +49,18 @@ describe('githubDB module', () => {
   });
 
   it('should find all data if no query passed', (done) => {
-    expect(githubDB.find()).eventually.to.contain('rocks').notify(done);
+    expect(githubDB.find()).eventually.to.contain('gonzalo').notify(done);
   });
+
+  it('should find object based on query', (done) => {
+    githubDB.auth(personalAccessToken);
+    expect(githubDB.find({name: 'Eric Broda'})).eventually.to.be.an('array').notify(done);
+  })
+
+  it.only('should find object based on query', (done) => {
+    githubDB.auth(personalAccessToken);
+    expect(githubDB.findOne({name: 'Eric Broda'})).eventually.to.be.an('object').notify(done);
+  })
 
 });
 /* eslint-disable no-console, no-unused-expressions, no-unused-vars */
