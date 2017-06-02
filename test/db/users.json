@@ -1,0 +1,51 @@
+[
+  {
+    "email_address":"ericbroda@cibc.com",
+    "name":"Eric Broda",
+    "verified":false,
+    "github_username":"ericbroda",
+    "_id":"07670c5e3bd047c0b82d8289d1e33c76"
+  },
+  {
+    "email_address":"steve.hu@cibc.com",
+    "name":"Steve Hu",
+    "verified":false,
+    "github_username":"stevehu",
+    "_id":"127d253226554988892e1e87c2c5371e"
+  },
+  {
+    "email_address":"dandobrin@cibc.com",
+    "name":"Dan Dobrin",
+    "verified":false,
+    "github_username":"Dan Dobrin",
+    "_id":"9239fcad5ec84459a14124db105be7d4"
+  },
+  {
+    "email_address":"gonzalovazquez@cibc.com",
+    "name":"Gonzalo Vazquez",
+    "verified":false,
+    "github_username":"gonzalovazquez",
+    "_id":"8f098d9d0d8e48a7bb678f7c7af1702c"
+  },
+  {
+    "email_address":"gavin.chenyan@cibc.com",
+    "name":"Gavin Chenyan",
+    "verified":false,
+    "github_username":"gavinchenyan",
+    "_id":"a3593fc4638d4861aee2223e46718d7d"
+  },
+  {
+    "email_address":"gavin.chenyan@cibc.com",
+    "name":"Gavin Chenyan",
+    "verified":false,
+    "github_username":"gavinchenyan",
+    "_id":"a3593fc4638d4861aee2223e46718d7d"
+  },
+  {
+    "email_address":"rob.bacinski@cibc.com",
+    "name":"Rob Bacinski",
+    "verified":false,
+    "github_username":"robbacinski",
+    "_id":"099d925484764f38b8689898ca712093"
+  }
+]
