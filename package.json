@@ -1,7 +1,7 @@
 {
   "name": "github-db",
-  "version": "0.0.5",
-  "main": "dist/diskdb.js",
+  "version": "1.0.0",
+  "main": "dist/githubdb.js",
   "description": "A Lightweight Cloud based JSON Database with a MongoDB like API for Node.",
   "bugs": "https://github.com/usmakestwo/githubDB/issues",
   "author": {
@@ -34,15 +34,9 @@
     "chai": "^4.0.0",
     "chai-as-promised": "^6.0.0",
     "chai-spies": "^0.7.1",
-    "grunt": "^1.0.0",
-    "grunt-contrib-jshint": "^1.0.0",
-    "grunt-contrib-nodeunit": "^1.0.0",
-    "grunt-contrib-watch": "^1.0.0",
     "jshint-stylish": "^0.2.0",
-    "load-grunt-tasks": "^0.4.0",
     "mocha": "^3.4.2",
     "mocha-webpack": "^0.7.0",
-    "time-grunt": "^0.3.1",
     "webpack": "^2.6.1",
     "webpack-node-externals": "^1.6.0"
   },

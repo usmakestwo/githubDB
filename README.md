@@ -2,7 +2,7 @@
 
 A Lightweight Cloud based JSON Database with a MongoDB like API for Node.
 
-_You will never know that you are interacting with a Cloud Provider_
+_You will never know that you are interacting with a Github_
 
 ## Contents
 
@@ -22,7 +22,8 @@ _You will never know that you are interacting with a Cloud Provider_
 
 ## Getting Started
 
-With githubDB you use Github as your private database.
+Ever wanted to use Github as your private database, now you can.
+
 
 Install the module locally :
 ```bash
@@ -30,38 +31,48 @@ $ npm install github-db
 ```
 
 ```js
-var db = require('github-db');
-
-// you can authenticate with the cloud provider here.
-const credentials = {
-  personalAccessToken: 'personal-access-token',
-  user: 'github-username',
-  repo: 'github-repo',
-  remoteFilename: 'filename-with-extension'
+// You can authenticate with the cloud provider here.
+var options = {
+  user: 'github-username', // <-- Your Github username
+  repo: 'github-repo', // <-- Your repository to be used a db
+  remoteFilename: 'filename-with-extension' // <- File with extension .json
 };
 
-db.connect('/path/to/db-folder', ['collection-name'], credentials);
-// you can access the traditional JSON DB methods here
+// Require GithubDB
+var GithubDB = require('..').default;
+// Initialize it with the options from above.
+var db = new GithubDB(options);
+
+// Authenticate Github DB -> grab a token from here https://github.com/settings/tokens
+githubDB.auth(personalAccessToken)
 ```
 
 ## Documentation
-### Connect to DB
-```js
-db.connect('/path/to/db-folder', ['collection-name'], credentials);
-```
-Cloud provider is one of the supported clients. githubDB will take care of the authentication.
-Filename will be the name of the JSON file. You can omit the extension, githubDB will take care of it for you.
+
+### Authenticating with Github
 
 ```js
-var db = require('github-db');
-db.connect('/path/to/db-folder', ['collection-name'], credentials);
+githubDB.auth(personalAccessToken)
+```
+In order to use Github DB, you will require a personal access token. You can request one
+from (Github)[https://github.com/settings/tokens]. It is recommended that you set your token
+as an enviroment variable. Never commit your token!
+
+```js
+var personalAccessToken = process.env.TOKEN; // Set the variable here
 ```
 
-This will check for a directory at given path, if it does not exits, githubDB will throw an error and exit.
+Start the server with the token
+```bash
+$ TOKEN=xxxx node app.js
+```
 
-If the directory exists but the file/collection does not exist, githubDB will create it for you.
+Once you are authenticated to you connect to your new Github Database.
+```js
+githubDB.connectToRepo()
+```
 
-**Note** : If you have manually created a JSON file, please make sure it contains a valid JSON array, otherwise githubDB
+**Note** : Please make sure the file on Github you are using as your database contains a valid JSON array, otherwise githubDB
 will return an empty array.
 
 ```js
@@ -76,69 +87,19 @@ undefined:0
 SyntaxError: Unexpected end of input
 ```
 ---
-### Load Collections
-Alternatively you can also load collections like
 
-```js
-var db = require('github-db');
-// this
-
-db = db.connect('/examples/db', ['articles'], credentials);
-db.loadCollections(['articles']);
-//or
-db.connect('/examples/db', ['articles'], credentials);
-db.loadCollections(['articles']);
-//or
-db.connect('/examples/db', ['articles'], credentials)
-  .loadCollections(['articles']);
-//or
-db.connect('/examples/db', ['articles'], credentials);
-```
-#### Load Multiple Collections
-
-```js
-var db = require('github-db');
-db.connect('/examples/db', ['articles','comments','users'], credentials);
-```
----
 ### Write/Save to Collection
-```js
-db.collectionName.save(object);
-```
-Once you have loaded a collection, you can access the collection's methods using the dot notation like
+
+With githubDb you can easily save an object.
 
 ```js
-db.[collectionName].[methodname]
+githubDB.save(users)
 ```
-To save the data, you can use
-```js
-var db = require('github-db');
-db.connect('db', ['articles'], credentials);
-var article = {
-    title : "githubDB rocks",
-    published : "today",
-    rating : "5 stars"
-}
-db.articles.save(article);
-// or
-db.articles.save([article]);
-```
-The saved data will be
-```js
-[
-    {
-        "title": "githubDB rocks",
-        "published": "today",
-        "rating": "5 stars",
-        "_id": "0f6047c6c69149f0be0c8f5943be91be"
-    }
-]
-```
+
 You can also save multiple objects at once like
 
 ```js
-var db = require('github-db');
-db.connect('db', ['articles'], credentials);
+
 var article1 = {
     title : 'githubDB rocks',
     published : 'today',
@@ -156,7 +117,7 @@ var article3 = {
     published : 'today',
     rating : '4 stars'
 }
-db.articles.save([article1, article2, article3]);
+githubDB.save([article1, article2, article3]);
 ```
 And this will return the inserted objects
 
@@ -181,11 +142,9 @@ There are 2 methods available for reading the JSON collection
 * db.collectionName.findOne(query)
 
 
-#### db.collectionName.find()
+#### githubDB.find()
 ```js
-var db = require('github-db');
-db.connect('/examples/db', ['articles'], credentials);
-db.articles.find();
+githubDB.find()
 ```
 This will return all the records
 ```js
@@ -198,17 +157,13 @@ This will return all the records
 ```
 You can also query with a criteria like
 ```js
-var db = require('github-db');
-db.connect('/examples/db', ['articles'], credentials);
-db.articles.find({rating : "5 stars"});
+githubDB.find({rating : "5 stars"});
 ```
 This will return all the articles which have a rating of 5.
 
 Find can take multiple criteria
 ```js
-var db = require('github-db');
-db.connect('/examples/db', ['articles'], credentials);
-db.articles.find({rating : "5 stars", published: "yesterday"});
+githubDB.find({rating : "5 stars", published: "yesterday"});
 ```
 This will return all the articles with a rating of 5, published yesterday.
 
@@ -234,29 +189,25 @@ var articleComments = {
 }
 ```
 ```js
-var savedArticle = db.articles.save([articleComments);
-foundArticles = db.articles.find({rating : 2});
+var savedArticle = githubDB.find([articleComments);
+foundArticles = githubDB.find({rating : 2});
 ```
 Since githubDB is mostly for light weight data storage, avoid nested structures and huge datasets.
 
 #### db.collectionName.findOne(query)
 ```js
-var db = require('github-db');
-db.connect('/examples/db', ['articles'], credentials);
-db.articles.findOne();
+githubDB.findOne();
 ```
 
 If you do not pass a query, githubDB will return the first article in the collection. If you pass a query, it will return first article in the filtered data.
 
 ```js
-var db = require('github-db');
-db.connect('/examples/db', ['articles'], credentials);
-db.articles.findOne({_id: '0f6047c6c69149f0be0c8f5943be91be'});
+githubDB.findOne({_id: '0f6047c6c69149f0be0c8f5943be91be'});
 ```
 ---
 ### Update Collection
 ```js
-db.collectionName.update(query, data, options);
+githubDB.update(query, data, options);
 ```
 
 You can also update one or many objects in the collection
@@ -268,9 +219,6 @@ options = {
 ```
 Usage
 ```js
-var db = require('github-db');
-db.connect('/examples/db', ['articles'], credentials);
-
 var query = {
   title : 'githubDB rocks'
 };
@@ -284,62 +232,40 @@ var options = {
    upsert: false
 };
 
-var updated = db.articles.update(query, dataToBeUpdate, options);
+var updated = githubDB.update(query, dataToBeUpdate, options);
 console.log(updated); // { updated: 1, inserted: 0 }
 ```
 ---
 ### Remove Collection
 ```js
-db.collectionName.remove(query, multi);
+githubDB.removeAll();
+githubDB.remove(query, multi);
 ```
 You can remove the entire collection (including the file) or you can remove the matched objects by passing in a query. When you pass a query, you can either delete all the matched objects or only the first one by passing `multi` as `false`. The default value of `multi` is `true`.
 
 ```js
-var db = require('github-db');
-db.connect('/examples/db', ['articles'], credentials);
-db.articles.remove({rating : "5 stars"});
+githubDB.remove({rating : "5 stars"});
 ```
 ```js
-var db = require('github-db');
-db.connect('/examples/db', ['articles'], credentials);
-db.articles.remove({rating : "5 stars"}, true); // remove all matched. Default - multi = true
+githubDB.remove({rating : "5 stars"}, true); // remove all matched. Default - multi = true
 ```
 
 ```js
-var db = require('github-db');
-db.connect('/examples/db', ['articles'], credentials);
-db.articles.remove({rating : "5 stars"}, false); // remove only the first match
-```
-Using remove without any params will delete the file and will remove the db instance.
-```js
-var db = require('github-db');
-db.connect('/examples/db', ['articles'], credentials);
-db.articles.remove();
-```
-After the above operation `db.articles` is `undefined`.
-
----
-### Count
-```js
-db.collectionName.count();
-```
-Will return the count of objects in the Collection
-```js
-var db = require('github-db');
-db.connect('/examples/db', ['articles'], credentials);
-db.articles.count(); // will give the count
+githubDB.remove({rating : "5 stars"}, false); // remove only the first match
 ```
 
-## Examples
-Refer to the [examples](https://github.com/usmakestwo/githubDB/tree/master/examples) folder.
+To delete the file simple use removeAll();
+```js
+githubDB.removeAll();
+```
 
 
 ## Contributing
 See the [CONTRIBUTING Guidelines](https://github.com/usmakestwo/githubDB/blob/master/CONTRIBUTING.md)
 
 ## Release History
-* 0.1.x
-  - Connect to Github
+* 1.0.0
+  - Working version
 
 ## License
 Copyright (c) 2017 UsMakesTwo. Licensed under the MIT license.
