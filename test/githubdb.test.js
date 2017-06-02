@@ -64,12 +64,11 @@ describe('githubDB module', () => {
     expect(githubDB.findOne({name: 'Eric Broda'})).eventually.to.be.an('object').notify(done);
   })
 
-  it.only('should update record based on query', (done) => {
-    githubDB.auth(personalAccessToken);
+  it('should update record based on query', (done) => {
     expect(githubDB.update({ github_username: 'gonzalovazquez' }, { verified: true })).eventually.to.be.an('object').notify(done);
   });
 
-  it('should only delete record from query', (done) => {
+  it('should only delete one record from query', (done) => {
     expect(githubDB.remove({ name: 'Gonzalo Vazquez' })).eventually.to.not.contain('gonzalo').notify(done);
   });
 
