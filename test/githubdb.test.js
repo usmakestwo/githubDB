@@ -21,13 +21,6 @@ const should = chai.should();
 
 const personalAccessToken = process.env.TOKEN;
 
-const userObject = {
-  "email_address": "gonzalo" + Math.random().toString() + "@cibc.com",
-  "name": "gonzalo vazquez",
-  "invited": false,
-  "github_username": "gonzalovazquez"+ Math.random().toString()
-};
-
 describe('githubDB module', () => {
 
   it('should failed authentication if not credentials are provided', (done) => {
@@ -52,15 +45,29 @@ describe('githubDB module', () => {
     expect(githubDB.find()).eventually.to.contain('gonzalo').notify(done);
   });
 
-  it('should find object based on query', (done) => {
-    githubDB.auth(personalAccessToken);
+  it('should find all object based on query', (done) => {
     expect(githubDB.find({name: 'Eric Broda'})).eventually.to.be.an('array').notify(done);
   })
 
-  it.only('should find object based on query', (done) => {
-    githubDB.auth(personalAccessToken);
+  it('should find one object based on query', (done) => {
     expect(githubDB.findOne({name: 'Eric Broda'})).eventually.to.be.an('object').notify(done);
   })
+
+  it('should only delete record from query', (done) => {
+    expect(githubDB.remove({name: 'Gonzalo Vazquez'})).eventually.to.not.contain('gonzalo').notify(done);
+  });
+
+  it('should delete a file if no query is passed', (done) => {
+    expect(githubDB.remove()).eventually.to.be.true.notify(done);
+  });
+
+
+  /**
+   * @todo - Make this work.
+   */
+  // it('should return false if file is not found', (done) => {
+  //   expect(githubDB.remove()).eventually.to.be.false.notify(done);
+  // });
 
 });
 /* eslint-disable no-console, no-unused-expressions, no-unused-vars */
