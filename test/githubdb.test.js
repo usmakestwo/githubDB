@@ -54,20 +54,22 @@ describe('githubDB module', () => {
   })
 
   it('should only delete record from query', (done) => {
-    expect(githubDB.remove({name: 'Gonzalo Vazquez'})).eventually.to.not.contain('gonzalo').notify(done);
+    expect(githubDB.remove({ name: 'Gonzalo Vazquez' })).eventually.to.not.contain('gonzalo').notify(done);
+  });
+
+  it('should return an error if no query is present', (done) => {
+    expect(githubDB.remove()).eventually.to.be.rejected;
+    done();
   });
 
   it('should delete a file if no query is passed', (done) => {
-    expect(githubDB.remove()).eventually.to.be.true.notify(done);
+    expect(githubDB.removeAll()).eventually.to.be.true.notify(done);
   });
 
-
-  /**
-   * @todo - Make this work.
-   */
-  // it('should return false if file is not found', (done) => {
-  //   expect(githubDB.remove()).eventually.to.be.false.notify(done);
-  // });
+  it('should throw an error if file is not found', (done) => {
+    expect(githubDB.removeAll()).eventually.to.be.rejected;
+    done();
+  });
 
 });
 /* eslint-disable no-console, no-unused-expressions, no-unused-vars */
