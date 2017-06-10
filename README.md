@@ -6,7 +6,9 @@ _You will never know that you are interacting with a Github_
 
 ## Contents
 
-* [Getting Started](#getting-started)
+* [Introduction](#introduction)
+  * [Prerequisites](#prerequisites)
+  * [Getting Started](#getting-started)
 * [Documentation](#documentation)
   * [Connect](#connect-to-db)
   * [Load Collections](#load-collections)
@@ -20,10 +22,38 @@ _You will never know that you are interacting with a Github_
 * [Contributing](#contributing)
 * [Release History](#release-history)
 
-## Getting Started
+## Introduction
 
 Ever wanted to use Github as your private database, now you can.
 
+Why would I want to use Github as my database?
+
+Good question. Developers have many choices of different databases, GithubDB however leverages
+all the features you have come to love from Github.
+
+- Logging (With Github, you can quicky look at your commits and see the write and updates for your request).
+- Visualization (Github offers amazing tools to visualize the incoming number of read/writes).
+- Persistance (With Github you can rollback to early stages of your data and see how it has evolved).
+- Security (Using Github, your database inherits the same standards from Github).
+- Availability (Github has known to be down, but let's be honest, it is good enough unless you are Facebook).
+
+### Prerequisites
+
+In order to sucessfully use Github, you are going to need two things.
+
+1) Personal Access Token
+
+Create a new [personal access token](https://github.com/settings/tokens/new) from Github. The only permission you need
+are **repo**.
+
+Write it down and store it somewhere same.
+
+2) An repository that you have access to with an file that has the extension .json.
+
+Inside that file (let's say you called it database.json), you are going to create an empty array.
+
+
+### Getting Starteed
 
 Install the module locally :
 ```bash
@@ -31,20 +61,29 @@ $ npm install github-db
 ```
 
 ```js
-// You can authenticate with the cloud provider here.
+/**
+* We are going to authenticate with Github and
+* specify our repo name and file we just created.
+*/
 var options = {
   user: 'github-username', // <-- Your Github username
   repo: 'github-repo', // <-- Your repository to be used a db
-  remoteFilename: 'filename-with-extension' // <- File with extension .json
+  remoteFilename: 'filename-with-extension-json' // <- File with extension .json
 };
 
 // Require GithubDB
 var GithubDB = require('..').default;
 // Initialize it with the options from above.
-var db = new GithubDB(options);
+var githubDB = new GithubDB(options);
 
 // Authenticate Github DB -> grab a token from here https://github.com/settings/tokens
-githubDB.auth(personalAccessToken)
+githubDB.auth(personalAccessToken);
+
+// Connect to repository
+githubDB.connectToRepo();
+
+// You are now authenticated with Github and you are ready to use it as your database.
+githubDB.save({"message": "wooohoo"});
 ```
 
 ## Documentation
@@ -69,7 +108,7 @@ $ TOKEN=xxxx node app.js
 
 Once you are authenticated to you connect to your new Github Database.
 ```js
-githubDB.connectToRepo()
+githubDB.connectToRepo();
 ```
 
 **Note** : Please make sure the file on Github you are using as your database contains a valid JSON array, otherwise githubDB
@@ -90,10 +129,14 @@ SyntaxError: Unexpected end of input
 
 ### Write/Save to Collection
 
-With githubDb you can easily save an object.
+With githubDb you can easily save an object. Since you are making a call to a network.
+This method is asynchronous. 
 
 ```js
-githubDB.save(users)
+githubDB.save(users).then((res) => {
+    // The result from the same
+    console.log(res);
+});
 ```
 
 You can also save multiple objects at once like
@@ -117,7 +160,11 @@ var article3 = {
     published : 'today',
     rating : '4 stars'
 }
-githubDB.save([article1, article2, article3]);
+
+githubDB.save([article1, article2, article3]).then((res) => {
+    // The result from the same
+    console.log(res);
+});
 ```
 And this will return the inserted objects
 
@@ -136,6 +183,7 @@ And this will return the inserted objects
     _id: '4ca1c1597ddc4020bc41b4418e7a568e' } ]
 ```
 ---
+
 ### Read from Collection
 There are 2 methods available for reading the JSON collection
 * db.collectionName.find(query)
@@ -144,7 +192,10 @@ There are 2 methods available for reading the JSON collection
 
 #### githubDB.find()
 ```js
-githubDB.find()
+githubDB.find().then((results) => {
+    // Results here
+    console.log(results);
+});
 ```
 This will return all the records
 ```js
@@ -157,57 +208,40 @@ This will return all the records
 ```
 You can also query with a criteria like
 ```js
-githubDB.find({rating : "5 stars"});
+githubDB.find({rating : "5 stars"}).then((results)=> {
+    console.log(results);
+});
 ```
 This will return all the articles which have a rating of 5.
 
 Find can take multiple criteria
 ```js
-githubDB.find({rating : "5 stars", published: "yesterday"});
+githubDB.find({rating : "5 stars", published: "yesterday"}).then((results) => {
+    console.log(results);  
+});
 ```
 This will return all the articles with a rating of 5, published yesterday.
 
-Nested JSON :
-
-```js
-var articleComments = {
-    title: 'githubDB rocks',
-    published: '2 days ago',
-    comments: [{
-        name: 'a user',
-        comment: 'this is cool',
-        rating: 2
-    }, {
-        name: 'b user',
-        comment: 'this is ratchet',
-        rating: 3
-    }, {
-        name: 'c user',
-        comment: 'this is awesome',
-        rating: 2
-    }]
-}
-```
-```js
-var savedArticle = githubDB.find([articleComments);
-foundArticles = githubDB.find({rating : 2});
-```
-Since githubDB is mostly for light weight data storage, avoid nested structures and huge datasets.
-
 #### db.collectionName.findOne(query)
 ```js
-githubDB.findOne();
+githubDB.findOne().then((results)=> {
+    console.log(results);
+});
 ```
 
 If you do not pass a query, githubDB will return the first article in the collection. If you pass a query, it will return first article in the filtered data.
 
 ```js
-githubDB.findOne({_id: '0f6047c6c69149f0be0c8f5943be91be'});
+githubDB.findOne({_id: '0f6047c6c69149f0be0c8f5943be91be'}).then((results)=> {
+    console.log(results);
+});
 ```
 ---
 ### Update Collection
 ```js
-githubDB.update(query, data, options);
+githubDB.update(query, data, options).then((updated)=> {
+    console.log(updated);  // { updated: 1, inserted: 0 }
+});;
 ```
 
 You can also update one or many objects in the collection
@@ -232,8 +266,9 @@ var options = {
    upsert: false
 };
 
-var updated = githubDB.update(query, dataToBeUpdate, options);
-console.log(updated); // { updated: 1, inserted: 0 }
+var updated = githubDB.update(query, dataToBeUpdate, options).then((results) => {
+  console.log(updated); // { updated: 1, inserted: 0 }  
+});
 ```
 ---
 ### Remove Collection
