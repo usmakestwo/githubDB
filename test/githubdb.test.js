@@ -11,7 +11,7 @@ chai.use(chaiAsPromised);
 
 const options = {
   owner: 'usmakestwo',
-  repo: 'githubDB/test/db',
+  repo: 'githubDB',
   path: 'test.json'
 };
 
