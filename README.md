@@ -1,4 +1,5 @@
 # githubDB
+[![Build Status](https://travis-ci.org/usmakestwo/githubDB.svg?branch=master)](https://travis-ci.org/usmakestwo/githubDB)
 
 A Lightweight Cloud based JSON Database with a MongoDB like API for Node.
 

@@ -10,8 +10,8 @@ import GithubDB from '../lib/githubdb';
 chai.use(chaiAsPromised);
 
 const options = {
-  owner: 'cibc-api',
-  repo: 'marketplace-admin',
+  owner: 'usmakestwo',
+  repo: 'githubDB/test/db',
   path: 'test.json'
 };
 
