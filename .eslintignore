@@ -1,0 +1,7 @@
+.idea
+.vscode
+.tmp
+logs
+node_modules
+coverage
+dist
