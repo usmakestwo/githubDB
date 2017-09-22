@@ -38,6 +38,7 @@
     "jshint-stylish": "^0.2.0",
     "mocha": "^3.4.2",
     "mocha-webpack": "^0.7.0",
+    "request": "^2.82.0",
     "webpack": "^2.6.1",
     "webpack-node-externals": "^1.6.0"
   },
