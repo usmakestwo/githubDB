@@ -6,15 +6,20 @@ import spies from 'chai-spies';
 
 import users from './db/users.json';
 import GithubDB from '../lib/githubdb';
+import { red as r, green as g, yellow as y } from 'chalk';
+import { default as request } from 'request';
 
 chai.use(chaiAsPromised);
 
 const options = {
-  owner: 'usmakestwo',
-  repo: 'githubDB',
+  owner: process.env.owner || 'usmakestwo',
+  repo: process.env.repo || 'githubDB',
   path: 'test.json'
 };
-
+const commiter = {
+  'name': process.env.commiterName || 'DineshAlapati',
+  'email': process.env.commiterEmail || 'dine.alapati@gmail.com' 
+}
 const newUser = {
   'email_address': 'newUser',
   'name': 'New User',
@@ -29,6 +34,34 @@ const should = chai.should();
 const personalAccessToken = process.env.TOKEN;
 
 describe('githubDB module', () => {
+
+  before((done) => {
+    console.log(y(`Creating ${options.path} file in the test repo..`));
+    const reqOpts = {
+      method: 'PUT',
+      url: `https://api.github.com/repos/${options.owner}/${options.repo}/contents/${options.path}?access_token=${personalAccessToken}`,
+      json: true,
+      headers: { 'content-type': 'application/json', 'User-Agent': 'githubDB' },
+      body: {
+        'message': `Create ${options.path} file`,
+        commiter,
+        'content': 'bXkgbmV3IGZpbGUgY29udGVudHM='
+      }
+    }
+    request(reqOpts, (err, res) => {
+      if(err) console.log(err);
+      else if((/^[4][0][3-4]$/).test(res.statusCode)) console.log(r('Error in creating file. Error: ', res.body));
+      else console.log(g(`Successfully created ${options.path} file in the test repo.`));
+      done();
+    });
+  });
+
+  beforeEach((done) => {
+    if(!personalAccessToken) {
+      console.log(r('TOKEN env variable is not defined'));
+    }
+    done();
+  });
 
   it('should failed authentication if not credentials are provided', (done) => {
     expect(githubDB.auth()).to.be.false;
