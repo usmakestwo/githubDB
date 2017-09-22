@@ -21,7 +21,7 @@ module.exports = {
             "error",
             "unix"
         ],
-        "max-len": [1, 125, 2, {"ignoreComments": true}],
+        "max-len": [1, 150, 2, {"ignoreComments": true}],
         "quotes": [
             "error",
             "single"
