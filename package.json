@@ -34,6 +34,7 @@
     "chai": "^4.0.0",
     "chai-as-promised": "^6.0.0",
     "chai-spies": "^0.7.1",
+    "eslint": "^4.7.2",
     "jshint-stylish": "^0.2.0",
     "mocha": "^3.4.2",
     "mocha-webpack": "^0.7.0",
