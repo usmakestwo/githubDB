@@ -1,8 +1,8 @@
 /* eslint-disable no-console, no-unused-expressions, no-unused-vars */
-import chai from 'chai';
-import spies from 'chai-spies';
 import assert from 'assert';
+import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
+import spies from 'chai-spies';
 
 import users from './db/users.json';
 import GithubDB from '../lib/githubdb';
@@ -16,10 +16,10 @@ const options = {
 };
 
 const newUser = {
-  "email_address": "newUser",
-  "name": "New User",
-  "verified": false,
-  "github_username": "newUser",
+  'email_address': 'newUser',
+  'name': 'New User',
+  'verified': false,
+  'github_username': 'newUser',
 };
 
 const githubDB = new GithubDB(options);
@@ -58,14 +58,15 @@ describe('githubDB module', () => {
 
   it('should find all object based on query', (done) => {
     expect(githubDB.find({name: 'Eric Broda'})).eventually.to.be.an('array').notify(done);
-  })
+  });
 
   it('should find one object based on query', (done) => {
     expect(githubDB.findOne({name: 'Eric Broda'})).eventually.to.be.an('object').notify(done);
-  })
+  });
 
   it('should update record based on query', (done) => {
-    expect(githubDB.update({ github_username: 'gonzalovazquez' }, { verified: true })).eventually.to.be.an('object').notify(done);
+    expect(githubDB.update({ github_username: 'gonzalovazquez' }, { verified: true }))
+      .eventually.to.be.an('object').notify(done);
   });
 
   it('should only delete one record from query', (done) => {
