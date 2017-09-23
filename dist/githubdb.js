@@ -49,20 +49,7 @@ var UUID = function UUID() {
   return (0, _uuid.v4)().replace(/-/g, '');
 };
 
-/**
- * Initialize connectivity with Github
- */
-var github = new _github2.default({
-  // optional
-  debug: false,
-  protocol: 'https',
-  host: 'api.github.com', // should be api.github.com for GitHub
-  headers: {
-    'user-agent': 'Github DB' // GitHub is happy with a unique user agent
-  },
-  Promise: require('bluebird'),
-  timeout: 5000
-});
+var github = '';
 
 /**
  * Returns a UTC timestamped.
@@ -123,6 +110,20 @@ var Githubdb = function () {
     _classCallCheck(this, Githubdb);
 
     this.options = options;
+    /**
+     * Initialize connectivity with Github
+     */
+    github = new _github2.default({
+      // optional
+      debug: false,
+      protocol: options.protocol || 'https',
+      host: options.host || 'api.github.com', // should be api.github.com for GitHub
+      headers: {
+        'user-agent': 'Github DB' // GitHub is happy with a unique user agent
+      },
+      Promise: require('bluebird'),
+      timeout: 5000
+    });
   }
 
   /**
@@ -320,8 +321,8 @@ var Githubdb = function () {
     }
 
     /**
-     * Delets file name from Github
-     */
+    * Deletes file name from Github
+    */
 
   }, {
     key: 'removeAll',
@@ -336,7 +337,7 @@ var Githubdb = function () {
             path: _this7.options.path,
             sha: res.sha,
             message: 'Deleted file at ' + timestamp()
-          }).then(function (res) {
+          }).then(function () {
             resolve(true);
           }).catch(function (err) {
             console.log((0, _chalk.red)(err));
@@ -400,7 +401,7 @@ var Githubdb = function () {
 
 
 exports.default = Githubdb;
-process.on("unhandledRejection", function (reason, promise) {
+process.on('unhandledRejection', function (reason, promise) {
   if (promise) {
     //console.log(e(JSON.stringify(promise)));
   }

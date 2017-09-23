@@ -303,6 +303,10 @@ See the [CONTRIBUTING Guidelines](https://github.com/usmakestwo/githubDB/blob/ma
 
 ## Release History
 
+- 1.1.1
+
+- Compiled dist to update with previous version
+
 - 1.1.0
 
   - Parameterized github API host url

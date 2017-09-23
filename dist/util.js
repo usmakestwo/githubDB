@@ -1,14 +1,4 @@
-/*
- * githubdb
- * https://github.com/usmakestwo/githubDB
- *
- * Copyright (c) 2017 UsMakesTwo
- * Licensed under the MIT license.
- */
-
 'use strict';
-
-/*jshint -W027*/
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -17,7 +7,17 @@ exports.ObjectSearcher = exports.finder = exports.removeFiltered = exports.updat
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /*
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * githubdb
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * https://github.com/usmakestwo/githubDB
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Copyright (c) 2017 UsMakesTwo
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Licensed under the MIT license.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+/* eslint-disable */
+/*jshint -W027*/
+
 
 var _merge = require('merge');
 
@@ -104,7 +104,7 @@ var ObjectSearcher = exports.ObjectSearcher = function () {
 
       while (this.objects.length !== 0) {
         var objRef = this.objects.pop();
-        this.performSearch(objRef['_obj'], valueOBj, objRef['parent']);
+        this.performSearch(objRef._obj, valueOBj, objRef.parent);
         if (!isMulti && this.results.length == 1) {
           return this.results;
         }
@@ -138,19 +138,17 @@ var ObjectSearcher = exports.ObjectSearcher = function () {
     value: function searchObject(object, valueOBj, opt_parentObj) {
       for (var objKey in object) {
 
-        if (_typeof(object[objKey]) != 'object') {
+        if (_typeof(object[objKey]) !== 'object') {
 
           if (valueOBj[objKey] == object[objKey]) {
             if (opt_parentObj !== undefined) {
-              if (this.resultIDS[opt_parentObj['_id']] === undefined) {
+              if (this.resultIDS[opt_parentObj._id] === undefined) {
                 this.results.push(opt_parentObj);
-                this.resultIDS[opt_parentObj['_id']] = '';
+                this.resultIDS[opt_parentObj._id] = '';
               }
-            } else {
-              if (this.resultIDS[object['_id']] === undefined) {
-                this.results.push(object);
-                this.resultIDS[object['_id']] = '';
-              }
+            } else if (this.resultIDS[object._id] === undefined) {
+              this.results.push(object);
+              this.resultIDS[object._id] = '';
             }
           }
         } else {
