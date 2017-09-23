@@ -302,7 +302,15 @@ githubDB.removeAll();
 See the [CONTRIBUTING Guidelines](https://github.com/usmakestwo/githubDB/blob/master/CONTRIBUTING.md)
 
 ## Release History
-* 1.0.0
+
+- 1.1.0
+
+  - Parameterized github API host url
+  - Added eslint
+  - Fixed test cases
+
+- 1.0.0
+
   - Working version
 
 ## License
