@@ -45,7 +45,7 @@ describe('githubDB module', () => {
       body: {
         'message': `Create ${options.path} file`,
         commiter,
-        'content': 'bXkgbmV3IGZpbGUgY29udGVudHM='
+        'content': 'bXkgbmV3IGZpbGUgY29udGVudHM=' // base64 encode of empty array
       }
     }
     request(reqOpts, (err, res) => {
