@@ -40,5 +40,11 @@
     "name":"Rob Bacinski",
     "verified":false,
     "github_username":"robbacinski"
+  },
+  {
+    "email_address": "dine.alapati@gmail.com ",
+    "name": "Dinesh Alapati",
+    "verified": false,
+    "github_username": "dineshalapati"
   }
 ]

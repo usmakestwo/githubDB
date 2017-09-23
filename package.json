@@ -1,6 +1,6 @@
 {
   "name": "github-db",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "main": "dist/githubdb.js",
   "description": "A Lightweight Cloud based JSON Database with a MongoDB like API for Node.",
   "bugs": "https://github.com/usmakestwo/githubDB/issues",
@@ -34,9 +34,11 @@
     "chai": "^4.0.0",
     "chai-as-promised": "^6.0.0",
     "chai-spies": "^0.7.1",
+    "eslint": "^4.7.2",
     "jshint-stylish": "^0.2.0",
     "mocha": "^3.4.2",
     "mocha-webpack": "^0.7.0",
+    "request": "^2.82.0",
     "webpack": "^2.6.1",
     "webpack-node-externals": "^1.6.0"
   },
@@ -49,6 +51,7 @@
   },
   "scripts": {
     "compile": "node_modules/.bin/babel lib --out-dir dist",
-    "test": "node ./node_modules/mocha-webpack/bin/mocha-webpack --webpack-config webpack.config-test.js \"test/*.test.js\""
+    "test": "node ./node_modules/mocha-webpack/bin/mocha-webpack --webpack-config webpack.config-test.js \"test/*.test.js\"",
+    "lint": "./node_modules/.bin/eslint --ext .js ."
   }
 }
