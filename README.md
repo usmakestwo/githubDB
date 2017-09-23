@@ -67,6 +67,8 @@ $ npm install github-db
 * specify our repo name and file we just created.
 */
 var options = {
+  host: 'private-github-api.com', // <-- Private github api url. If not passed, defaults to 'api.github.com'
+  protocol: 'https', // <-- http protocol 'https' or 'http'. If not passed, defaults to 'https'
   user: 'github-username', // <-- Your Github username
   repo: 'github-repo', // <-- Your repository to be used a db
   remoteFilename: 'filename-with-extension-json' // <- File with extension .json
