@@ -118,6 +118,7 @@ var Githubdb = function () {
       debug: false,
       protocol: options.protocol || 'https',
       host: options.host || 'api.github.com', // should be api.github.com for GitHub
+      pathPrefix: options.pathPrefix || null, // for some GHEs; none for GitHub
       headers: {
         'user-agent': 'Github DB' // GitHub is happy with a unique user agent
       },
