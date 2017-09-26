@@ -68,6 +68,7 @@ $ npm install github-db
 */
 var options = {
   host: 'private-github-api.com', // <-- Private github api url. If not passed, defaults to 'api.github.com'
+  pathPrefix: 'prefix-for-enterprise-instance', // <-- Private github api url prefix. If not passed, defaults to null.
   protocol: 'https', // <-- http protocol 'https' or 'http'. If not passed, defaults to 'https'
   user: 'github-username', // <-- Your Github username
   repo: 'github-repo', // <-- Your repository to be used a db
@@ -303,18 +304,18 @@ See the [CONTRIBUTING Guidelines](https://github.com/usmakestwo/githubDB/blob/ma
 
 ## Release History
 
-- 1.1.1
+- 1.1.2
+  - Allow to pass a path prefix when connecting to Enterprise Github
 
-- Compiled dist to update with previous version
+- 1.1.1
+  - Compiled dist to update with previous version
 
 - 1.1.0
-
   - Parameterized github API host url
   - Added eslint
   - Fixed test cases
 
 - 1.0.0
-
   - Working version
 
 ## License
