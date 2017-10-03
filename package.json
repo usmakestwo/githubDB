@@ -1,6 +1,6 @@
 {
   "name": "github-db",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "main": "dist/githubdb.js",
   "description": "A Lightweight Cloud based JSON Database with a MongoDB like API for Node.",
   "bugs": "https://github.com/usmakestwo/githubDB/issues",

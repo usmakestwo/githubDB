@@ -189,10 +189,10 @@ And this will return the inserted objects
 ---
 
 ### Read from Collection
-There are 2 methods available for reading the JSON collection
+There are 3 methods available for reading the JSON collection
 * db.collectionName.find(query)
+* db.collectionName.findExact(query)
 * db.collectionName.findOne(query)
-
 
 #### githubDB.find()
 ```js
@@ -226,7 +226,26 @@ githubDB.find({rating : "5 stars", published: "yesterday"}).then((results) => {
 ```
 This will return all the articles with a rating of 5, published yesterday.
 
-#### db.collectionName.findOne(query)
+#### githubDB.findExact(query)
+This method returns exact match of records from the collection. 
+```js
+githubDB.findExact({
+        title: 'githubDB rocks', 
+        rating: '4 stars'
+    }).then((results)=> {
+    console.log(results);
+});
+```
+This will return all the records
+```js
+[{
+    title: 'githubDB rocks',
+    published: 'today',
+    rating: '4 stars',
+    _id: 'b1cdbb3525b84e8c822fc78896d0ca7b' 
+}]
+```
+#### githubDB.findOne(query)
 ```js
 githubDB.findOne().then((results)=> {
     console.log(results);
@@ -303,6 +322,9 @@ githubDB.removeAll();
 See the [CONTRIBUTING Guidelines](https://github.com/usmakestwo/githubDB/blob/master/CONTRIBUTING.md)
 
 ## Release History
+
+- 1.1.3
+  - Add findExact method which returns exact match of objects from the collection
 
 - 1.1.2
   - Allow to pass a path prefix when connecting to Enterprise Github

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.ObjectSearcher = exports.finder = exports.removeFiltered = exports.updateFiltered = undefined;
+exports.exactFind = exports.ObjectSearcher = exports.finder = exports.removeFiltered = exports.updateFiltered = undefined;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
@@ -170,3 +170,20 @@ var ObjectSearcher = exports.ObjectSearcher = function () {
 
   return ObjectSearcher;
 }();
+
+/** finder that searches exact match of query object **/
+
+
+var exactFind = exports.exactFind = function exactFind(arrayObj, queryObj) {
+  var checkEquality = function checkEquality(obj, qObj) {
+    for (var key in qObj) {
+      if (obj[key] === undefined || obj[key] !== qObj[key]) {
+        return false;
+      }
+    }
+    return true;
+  };
+  return arrayObj.filter(function (obj) {
+    return checkEquality(obj, queryObj);
+  });
+};

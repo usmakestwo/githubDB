@@ -97,6 +97,10 @@ describe('githubDB module', () => {
     expect(githubDB.findOne({name: 'Eric Broda'})).eventually.to.be.an('object').notify(done);
   });
 
+  it('should find all object based on query', (done) => {
+    expect(githubDB.findExact({name: 'Dinesh Alapati', org: 'org2'})).eventually.to.be.an('array').notify(done);
+  });
+
   it('should update record based on query', (done) => {
     expect(githubDB.update({ github_username: 'gonzalovazquez' }, { verified: true }))
       .eventually.to.be.an('object').notify(done);
