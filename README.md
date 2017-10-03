@@ -323,6 +323,9 @@ See the [CONTRIBUTING Guidelines](https://github.com/usmakestwo/githubDB/blob/ma
 
 ## Release History
 
+- 1.1.3
+  - Add findExact method which returns exact match of objects from the collection
+
 - 1.1.2
   - Allow to pass a path prefix when connecting to Enterprise Github
 
