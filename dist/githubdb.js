@@ -292,6 +292,29 @@ var Githubdb = function () {
     }
 
     /**
+     * Returns exact match of records from the collection
+     * @param {string} query - Return query string
+     */
+
+  }, {
+    key: 'findExact',
+    value: function findExact(query) {
+      var _this6 = this;
+
+      return getCurrentFile(this.options).then(function (res) {
+        return new Promise(function (resolve) {
+          var decoded = decode(res.content);
+          if (!query || Object.keys(query).length === 0) {
+            resolve(decoded);
+          }
+          var collection = _this6._parse(decoded);
+          var searchedResults = util.exactFind(collection, query);
+          resolve(searchedResults);
+        });
+      });
+    }
+
+    /**
      * Fetches collection and removes record.
      * @param {string} query - Record to move
      * @param {boolean} multi - Delete multiple records
@@ -300,18 +323,18 @@ var Githubdb = function () {
   }, {
     key: 'remove',
     value: function remove(query, multi) {
-      var _this6 = this;
+      var _this7 = this;
 
       return getCurrentFile(this.options).then(function (res) {
         return new Promise(function (resolve, reject) {
           if (query) {
             var decoded = decode(res.content);
-            var collection = _this6._parse(decoded);
+            var collection = _this7._parse(decoded);
             if (typeof multi === 'undefined') {
               multi = true;
             }
             collection = util.removeFiltered(collection, query, multi);
-            return _this6._update(collection, res.sha).then(function (res) {
+            return _this7._update(collection, res.sha).then(function (res) {
               resolve(res);
             });
           } else {
@@ -328,14 +351,14 @@ var Githubdb = function () {
   }, {
     key: 'removeAll',
     value: function removeAll() {
-      var _this7 = this;
+      var _this8 = this;
 
       return getCurrentFile(this.options).then(function (res) {
         return new Promise(function (resolve, reject) {
           github.repos.deleteFile({
-            owner: _this7.options.owner,
-            repo: _this7.options.repo,
-            path: _this7.options.path,
+            owner: _this8.options.owner,
+            repo: _this8.options.repo,
+            path: _this8.options.path,
             sha: res.sha,
             message: 'Deleted file at ' + timestamp()
           }).then(function () {
@@ -358,13 +381,13 @@ var Githubdb = function () {
   }, {
     key: 'update',
     value: function update(query, data, options) {
-      var _this8 = this;
+      var _this9 = this;
 
       return getCurrentFile(this.options).then(function (res) {
         return new Promise(function (resolve) {
           var ret = {};
           var decoded = decode(res.content);
-          var collection = _this8._parse(decoded);
+          var collection = _this9._parse(decoded);
           var records = util.finder(collection, query, true);
           if (records.length) {
             if (options && options.multi) {
@@ -387,7 +410,7 @@ var Githubdb = function () {
               ret.inserted = 0;
             }
           }
-          return _this8._update(collection, res.sha).then(function (res) {
+          return _this9._update(collection, res.sha).then(function (res) {
             resolve(res);
           });
         });
