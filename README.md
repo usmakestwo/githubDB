@@ -189,10 +189,10 @@ And this will return the inserted objects
 ---
 
 ### Read from Collection
-There are 2 methods available for reading the JSON collection
+There are 3 methods available for reading the JSON collection
 * db.collectionName.find(query)
+* db.collectionName.findExact(query)
 * db.collectionName.findOne(query)
-
 
 #### githubDB.find()
 ```js
@@ -226,7 +226,26 @@ githubDB.find({rating : "5 stars", published: "yesterday"}).then((results) => {
 ```
 This will return all the articles with a rating of 5, published yesterday.
 
-#### db.collectionName.findOne(query)
+#### githubDB.findExact(query)
+This method returns exact match of records from the collection. 
+```js
+githubDB.findExact({
+        title: 'githubDB rocks', 
+        rating: '4 stars'
+    }).then((results)=> {
+    console.log(results);
+});
+```
+This will return all the records
+```js
+[{
+    title: 'githubDB rocks',
+    published: 'today',
+    rating: '4 stars',
+    _id: 'b1cdbb3525b84e8c822fc78896d0ca7b' 
+}]
+```
+#### githubDB.findOne(query)
 ```js
 githubDB.findOne().then((results)=> {
     console.log(results);
