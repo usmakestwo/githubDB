@@ -70,9 +70,9 @@ var options = {
   host: 'private-github-api.com', // <-- Private github api url. If not passed, defaults to 'api.github.com'
   pathPrefix: 'prefix-for-enterprise-instance', // <-- Private github api url prefix. If not passed, defaults to null.
   protocol: 'https', // <-- http protocol 'https' or 'http'. If not passed, defaults to 'https'
-  user: 'github-username', // <-- Your Github username
+  owner: 'github-username', // <-- Your Github username
   repo: 'github-repo', // <-- Your repository to be used a db
-  remoteFilename: 'filename-with-extension-json' // <- File with extension .json
+  path: 'filename-with-extension-json' // <- File with extension .json
 };
 
 // Require GithubDB
