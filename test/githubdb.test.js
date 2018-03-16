@@ -35,7 +35,7 @@ const personalAccessToken = process.env.TOKEN;
 
 describe('githubDB module', () => {
 
-  before((done) => {
+  before(done => {
     console.log(y(`Creating ${options.path} file in the test repo..`));
     const reqOpts = {
       method: 'PUT',
@@ -45,7 +45,7 @@ describe('githubDB module', () => {
       body: {
         'message': `Create ${options.path} file`,
         commiter,
-        'content': 'bXkgbmV3IGZpbGUgY29udGVudHM=' // base64 encode of empty array
+        'content': 'W10=' // base64 encode of empty array
       }
     }
     request(reqOpts, (err, res) => {
@@ -56,70 +56,70 @@ describe('githubDB module', () => {
     });
   });
 
-  beforeEach((done) => {
+  beforeEach(done => {
     if(!personalAccessToken) {
       console.log(r('TOKEN env variable is not defined'));
     }
     done();
   });
 
-  it('should failed authentication if not credentials are provided', (done) => {
+  it('should failed authentication if not credentials are provided', done => {
     expect(githubDB.auth()).to.be.false;
     done();
   });
 
-  it('should return authenticated client', (done) => {
+  it('should return authenticated client', done => {
     expect(githubDB.auth(personalAccessToken)).to.be.true;
     done();
   });
 
-  it('should return the reference of the connected path', (done) => {
+  it('should return the reference of the connected path', done => {
     expect(githubDB.connectToRepo()).eventually.to.be.an('object').notify(done);
   });
 
-  it('should save information passed', (done) => {
+  it('should save information passed', done => {
     expect(githubDB.save(users)).eventually.to.be.an('object').notify(done);
   });
 
-  it('should save one record and append to collection', (done) => {
+  it('should save one record and append to collection', done => {
     expect(githubDB.save(newUser)).eventually.to.be.an('object').notify(done);
   });
 
-  it('should find all data if no query passed', (done) => {
+  it('should find all data if no query passed', done => {
     expect(githubDB.find()).eventually.to.contain('gonzalo').notify(done);
   });
 
-  it('should find all object based on query', (done) => {
+  it('should find all object based on query', done => {
     expect(githubDB.find({name: 'Eric Broda'})).eventually.to.be.an('array').notify(done);
   });
 
-  it('should find one object based on query', (done) => {
+  it('should find one object based on query', done => {
     expect(githubDB.findOne({name: 'Eric Broda'})).eventually.to.be.an('object').notify(done);
   });
 
-  it('should find all object based on query', (done) => {
+  it('should find all object based on query', done => {
     expect(githubDB.findExact({name: 'Dinesh Alapati', org: 'org2'})).eventually.to.be.an('array').notify(done);
   });
 
-  it('should update record based on query', (done) => {
+  it('should update record based on query', done => {
     expect(githubDB.update({ github_username: 'gonzalovazquez' }, { verified: true }))
       .eventually.to.be.an('object').notify(done);
   });
 
-  it('should only delete one record from query', (done) => {
+  it('should only delete one record from query', done => {
     expect(githubDB.remove({ name: 'Gonzalo Vazquez' })).eventually.to.not.contain('gonzalo').notify(done);
   });
 
-  it('should return an error if no query is present', (done) => {
+  it('should return an error if no query is present', done => {
     expect(githubDB.remove()).eventually.to.be.rejected;
     done();
   });
 
-  it('should delete a file if no query is passed', (done) => {
+  it('should delete a file if no query is passed', done => {
     expect(githubDB.removeAll()).eventually.to.be.true.notify(done);
   });
 
-  it('should throw an error if file is not found', (done) => {
+  it('should throw an error if file is not found', done => {
     expect(githubDB.removeAll()).eventually.to.be.rejected;
     done();
   });
