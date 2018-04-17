@@ -316,6 +316,9 @@ To delete the file simple use removeAll();
 ```js
 githubDB.removeAll();
 ```
+## Performance
+
+The module makes synchronous request to Github. The performance is then inhereted from the network connection speed.
 
 
 ## Contributing
