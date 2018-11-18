@@ -13,12 +13,12 @@ chai.use(chaiAsPromised);
 
 const options = {
   owner: process.env.owner || 'usmakestwo',
-  repo: process.env.repo || 'githubDB',
+  repo: process.env.repo || 'githubDB-testing',
   path: 'test.json'
 };
 const commiter = {
-  'name': process.env.commiterName || 'DineshAlapati',
-  'email': process.env.commiterEmail || 'dine.alapati@gmail.com' 
+  'name': process.env.commiterName || 'GonzaloVazquez',
+  'email': process.env.commiterEmail || 'gonzalovazquez010@gmail.com' 
 }
 const newUser = {
   'email_address': 'newUser',
