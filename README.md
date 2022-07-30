@@ -71,7 +71,7 @@ var options = {
   pathPrefix: 'prefix-for-enterprise-instance', // <-- Private github api url prefix. If not passed, defaults to null.
   protocol: 'https', // <-- http protocol 'https' or 'http'. If not passed, defaults to 'https'
   owner: 'github-username', // <-- Your Github username
-  repo: 'github-repo', // <-- Your repository to be used a db
+  repo: 'github-repo', // <-- Your repository to be used as db
   path: 'filename-with-extension-json' // <- File with extension .json
 };
 
@@ -318,7 +318,7 @@ githubDB.removeAll();
 ```
 ## Performance
 
-The module makes synchronous request to Github. The performance is then inhereted from the network connection speed.
+The module makes synchronous request to Github. The performance is then inherited from the network connection speed.
 
 
 ## Contributing
