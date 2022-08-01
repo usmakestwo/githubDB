@@ -49,7 +49,7 @@ are **repo**.
 
 Write it down and store it somewhere same.
 
-2) An repository that you have access to with an file that has the extension .json.
+2) A repository that you have access to with an file that has the extension .json.
 
 Inside that file (let's say you called it database.json), you are going to create an empty array.
 
