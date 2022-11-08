@@ -37,9 +37,9 @@
     "eslint": "^4.7.2",
     "jshint-stylish": "^0.2.0",
     "mocha": "^3.4.2",
-    "mocha-webpack": "^0.7.0",
+    "mocha-webpack": "^1.1.0",
     "request": "^2.88.0",
-    "webpack": "^2.6.1",
+    "webpack": "^5.74.0",
     "webpack-node-externals": "^1.6.0"
   },
   "dependencies": {
